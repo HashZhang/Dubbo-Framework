@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sf.hash.test.dao.mapper.demo.DemoTestMapper">
+	<resultMap id="DemoTestExtendResultMap" type="com.sf.hash.test.dao.domain.demo.extend.DemoTestExtend">		
+		<id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="code" property="code" jdbcType="VARCHAR" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="description" property="description" jdbcType="VARCHAR" />
+	    <result column="comment" property="comment" jdbcType="VARCHAR" />
+	    <result column="level" property="demoLevel" jdbcType="INTEGER" />
+	    <result column="level_name" property="demoLevelName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="DemoTestExtendResultMap">
+		SELECT c1.id, c1.code, c1.name, c1.description, c1.comment, c2.level, c2.level_name
+		 FROM demo_test c1 LEFT JOIN demo_test_level c2 ON c1.code=c2.code
+	</select>
+	
+	<delete id="deleteByCode" parameterType="java.lang.String" >
+        delete from demo_test where code = #{code,jdbcType=VARCHAR}
+    </delete>
+    
+	<select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from demo_test
+	    where code = #{code,jdbcType=INTEGER}
+    </select>
+</mapper>
