@@ -23,7 +23,8 @@
 	<!-- use tomcat server -->
     <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500"
                     extension="com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter"/>
-                    
-	<dubbo:service interface="com.sf.hash.test.service.demo.DemoRestService" ref="demoRestServiceImpl" protocol="rest" validation="true"/>
-	
+    <dubbo:service interface="com.sf.hash.test.service.task.TaskRestService" ref="taskRestServiceImpl" protocol="rest" validation="true"/>                
+	<dubbo:service interface="com.sf.hash.test.service.user.UserRestService" ref="userRestServiceImpl" protocol="rest" validation="true"/>
+    <dubbo:service interface="com.sf.hash.test.service.task.TaskUserRestService" ref="taskUserRestServiceImpl" protocol="rest" validation="true"/>
+    
 </beans>

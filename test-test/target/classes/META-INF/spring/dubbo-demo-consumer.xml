@@ -20,8 +20,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<dubbo:reference id="demoService" interface="com.sf.hash.test.service.demo.DemoService" />
-	
-	<dubbo:reference id="demoRestService" interface="com.sf.hash.test.service.demo.DemoRestService" />
-
+	<dubbo:reference id="taskService" interface="com.sf.hash.test.service.task.TaskService" />
+    <dubbo:reference id="taskUserService" interface="com.sf.hash.test.service.task.TaskUserService" />
+    <dubbo:reference id="userService" interface="com.sf.hash.test.service.user.UserService" />
+    
+    <bean class="com.sf.hash.test.service.demoperformance.TestDemo" >
+        <property name="taskService" ref="taskService" />
+        <property name="taskUserService" ref="taskUserService" />
+        <property name="userService" ref="userService" />
+    </bean>
 </beans>

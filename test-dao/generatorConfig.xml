@@ -30,7 +30,7 @@
         </javaTypeResolver>
 
         <!-- generate Model -->
-        <javaModelGenerator targetPackage="com.sf.hash.test.dao.domain.user"
+        <javaModelGenerator targetPackage="com.sf.hash.test.dao.domain.task"
              targetProject="${project.build.directory}/../src/main/java"> 
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
@@ -38,13 +38,13 @@
         </javaModelGenerator>
 
         <!-- generate xml -->
-        <sqlMapGenerator targetPackage="sqlmap.db.user"
+        <sqlMapGenerator targetPackage="sqlmap.db.hotdb.task"
              targetProject="${project.build.directory}/../src/main/resources"> 
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
         <!-- generate Mapper -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.sf.hash.test.dao.mapper.user"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.sf.hash.test.dao.mapper.task"
             targetProject="${project.build.directory}/../src/main/java"> 
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
@@ -70,7 +70,7 @@
 		  delimitIdentifiers CDATA #IMPLIED
 		  delimitAllColumns CDATA #IMPLIED
          -->
-		 <table schema="" tableName="customer" domainObjectName="Customer" modelType="flat"
+		 <table schema="" tableName="ORDER_TASK_USER" domainObjectName="TaskUser" modelType="flat"
             enableCountByExample="false" enableUpdateByExample="false"  
             enableDeleteByExample="false" enableSelectByExample="false" 
             selectByExampleQueryId="false">

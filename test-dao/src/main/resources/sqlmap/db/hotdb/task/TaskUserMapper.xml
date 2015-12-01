@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sf.hash.test.dao.mapper.task.TaskUserMapper" >
+  <resultMap id="BaseResultMap" type="com.sf.hash.test.dao.domain.task.TaskUser" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USERID" property="userid" jdbcType="BIGINT" />
+    <result column="TASKID" property="taskid" jdbcType="BIGINT" />
+    <result column="TASK_status" property="taskStatus" jdbcType="VARCHAR" />
+    <result column="TASK_linit_tm" property="taskLinitTm" jdbcType="DATE" />
+    <result column="user_username" property="userUsername" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="TaskMap" type="com.sf.hash.test.dao.domain.task.Task" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="task_type" property="taskType" jdbcType="VARCHAR" />
+    <result column="biz_catg_id" property="bizCatgId" jdbcType="INTEGER" />
+    <result column="start_tm" property="startTm" jdbcType="TIMESTAMP" />
+    <result column="end_tm" property="endTm" jdbcType="TIMESTAMP" />
+    <result column="limit_tm" property="limitTm" jdbcType="TIMESTAMP" />
+    <result column="start_node" property="startNode" jdbcType="VARCHAR" />
+    <result column="end_node" property="endNode" jdbcType="VARCHAR" />
+    <result column="biz_entity" property="bizEntity" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="UserMap" type="com.sf.hash.test.dao.domain.user.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="auth_type" property="authType" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USERID, TASKID, TASK_status, TASK_linit_tm, user_username, user_status
+  </sql>
+  <select id="selectTaskByUserID" resultMap="TaskMap" parameterType="java.lang.Long">
+    select * from order_task
+    where ID in (
+        select TASKID from order_task_user where USERID =  #{id,jdbcType=BIGINT}
+    )
+  </select>
+  <select id="selectUserByTaskID" resultMap="UserMap" parameterType="java.lang.Long">
+    select * from order_user
+    where ID in (
+        select USERID from order_task_user where TASKID =  #{id,jdbcType=BIGINT}
+    )
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_task_user
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_task_user
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.sf.hash.test.dao.domain.task.TaskUser" >
+    insert into order_task_user (ID, USERID, TASKID, 
+      TASK_status, TASK_linit_tm, user_username, 
+      user_status)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{taskid,jdbcType=BIGINT}, 
+      #{taskStatus,jdbcType=VARCHAR}, #{taskLinitTm,jdbcType=DATE}, #{userUsername,jdbcType=VARCHAR}, 
+      #{userStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sf.hash.test.dao.domain.task.TaskUser" >
+    insert into order_task_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userid != null" >
+        USERID,
+      </if>
+      <if test="taskid != null" >
+        TASKID,
+      </if>
+      <if test="taskStatus != null" >
+        TASK_status,
+      </if>
+      <if test="taskLinitTm != null" >
+        TASK_linit_tm,
+      </if>
+      <if test="userUsername != null" >
+        user_username,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="taskid != null" >
+        #{taskid,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null" >
+        #{taskStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="taskLinitTm != null" >
+        #{taskLinitTm,jdbcType=DATE},
+      </if>
+      <if test="userUsername != null" >
+        #{userUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sf.hash.test.dao.domain.task.TaskUser" >
+    update order_task_user
+    <set >
+      <if test="userid != null" >
+        USERID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="taskid != null" >
+        TASKID = #{taskid,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null" >
+        TASK_status = #{taskStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="taskLinitTm != null" >
+        TASK_linit_tm = #{taskLinitTm,jdbcType=DATE},
+      </if>
+      <if test="userUsername != null" >
+        user_username = #{userUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sf.hash.test.dao.domain.task.TaskUser" >
+    update order_task_user
+    set USERID = #{userid,jdbcType=BIGINT},
+      TASKID = #{taskid,jdbcType=BIGINT},
+      TASK_status = #{taskStatus,jdbcType=VARCHAR},
+      TASK_linit_tm = #{taskLinitTm,jdbcType=DATE},
+      user_username = #{userUsername,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
