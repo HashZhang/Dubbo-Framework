@@ -22,9 +22,15 @@ public class TestDemo {
 	}
 
 	public boolean start() throws Exception {
-			String i=taskService.addTask();
-
-			return "Insert Successfully!".equals(i);
+		for (int i = 0; i < 1000; i++) {
+			if (!taskService.addTask().equals("Insert Successfully!")||(!taskUserService.addTask().equals("Insert Successfully!")))
+				return false;
+			if(i%10==0){
+				if(!userService.addUser().startsWith("Insert Successfully!"))
+					return false;
+			}
+		}
+		return true;
 	}
 
 }
